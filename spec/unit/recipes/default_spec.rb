@@ -46,7 +46,6 @@ describe 'mongodb::default' do
     it 'should start the mongod service' do
       expect(chef_run).to start_service 'mongod'
     end
-
+    
   end
-
 end

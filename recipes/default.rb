@@ -15,6 +15,21 @@ apt_repository 'mongodb-org' do
     key "EA312927"
 end
 
+service 'mongod' do
+  supports status: true, restart: true, reload: true
+  action [:enable, :start]
+end
+
 package 'mongodb-org' do
   action :upgrade
+end
+
+template '/etc/mongod.conf' do
+  source 'mongod.conf.erb'
+  notifies :restart, 'service[mongod]'
+end
+
+template '/lib/systemd/system/mongod.service' do
+  source '/lib/systemd/system/mongod.service'
+  notifies :restart, 'service[mongod]'
 end

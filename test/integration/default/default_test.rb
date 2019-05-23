@@ -3,8 +3,6 @@
 # The InSpec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-unless os.windows?
-
   describe service('mongod') do
     it { should be_running }
     it { should be_enabled }
