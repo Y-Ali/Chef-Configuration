@@ -5,14 +5,16 @@
 # Note: if you run mongodb as a non-root user (recommended) you may
 # need to create and set permissions for this directory manually,
 # e.g., if the parent directory isn't mutable by the mongodb user.
-dbpath=<%= node[:mongodb][:dbpath] %>
+dbpath= /var/lib/mongodb
 
 #where to log
 logpath=/var/log/mongodb/mongodb.log
 
 logappend=true
 
-port = <%= node[:mongodb][:port] %>
+port = 27017
+
+bindIp = 0.0.0.0
 
 # Enables periodic logging of CPU utilization and I/O wait
 #cpu = true
@@ -57,37 +59,3 @@ port = <%= node[:mongodb][:port] %>
 
 # Disable data file preallocation.
 #noprealloc = true
-
-# Specify .ns file size for new databases.
-# nssize = <size>
-
-# Accout token for Mongo monitoring server.
-#mms-token = <token>
-
-# Server name for Mongo monitoring server.
-#mms-name = <server-name>
-
-# Ping interval for Mongo monitoring server.
-#mms-interval = <seconds>
-
-# Replication Options
-
-# in replicated mongo databases, specify here whether this is a slave or master
-#slave = true
-#source = master.example.com
-# Slave only: specify a single database to replicate
-#only = master.example.com
-# or
-#master = true
-#source = slave.example.com
-
-# Address of a server to pair with.
-#pairwith = <server:port>
-# Address of arbiter server.
-#arbiter = <server:port>
-# Automatically resync if slave data is stale
-#autoresync
-# Custom size for replication operation log.
-#oplogSize = <MB>
-# Size limit for in-memory storage of op ids.
-#opIdMem = <bytes>

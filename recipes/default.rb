@@ -13,11 +13,7 @@ apt_repository 'mongodb-org' do
     components ["multiverse"]
     keyserver "hkp://keyserver.ubuntu.com:80"
     key "EA312927"
-end
 
-service 'mongod' do
-  supports status: true, restart: true, reload: true
-  action [:enable, :start]
 end
 
 package 'mongodb-org' do
@@ -26,10 +22,19 @@ end
 
 template '/etc/mongod.conf' do # location
   source 'mongod.conf.erb'  # mongo.conf.erb source
+  owner 'root'
+  group 'root'
+  mode '0755'
   notifies :restart, 'service[mongod]'
+
 end
 
 template '/lib/systemd/system/mongod.service' do
-  source 'mongod.serice.conf'
+  source 'mongod.service.erb'
   notifies :restart, 'service[mongod]'
+end
+
+service 'mongod' do
+  supports status: true, restart: true, reload: true
+  action [:enable, :start]
 end

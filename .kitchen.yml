@@ -15,8 +15,9 @@ verifier:
   name: inspec
 platforms:
   - name: ubuntu-16.04
-    box:
-        xneial/ubutu16
+    driver:
+      box:
+          ubuntu/xenial64
 suites:
   - name: default
     run_list:
