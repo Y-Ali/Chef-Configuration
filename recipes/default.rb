@@ -24,12 +24,12 @@ package 'mongodb-org' do
   action :upgrade
 end
 
-template '/etc/mongod.conf' do
-  source 'mongod.conf.erb'
+template '/etc/mongod.conf' do # location
+  source 'mongod.conf.erb'  # mongo.conf.erb source
   notifies :restart, 'service[mongod]'
 end
 
 template '/lib/systemd/system/mongod.service' do
-  source '/lib/systemd/system/mongod.service'
+  source 'mongod.serice.conf'
   notifies :restart, 'service[mongod]'
 end

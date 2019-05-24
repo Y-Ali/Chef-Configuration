@@ -11,7 +11,7 @@ describe 'mongodb::default' do
     let(:chef_run) do
       # for a complete list of available platforms and versions see:
       # https://github.com/customink/fauxhai/blob/master/PLATFORMS.md
-      runner = ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
+      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '16.04')
       runner.converge(described_recipe)
     end
 
@@ -35,9 +35,9 @@ describe 'mongodb::default' do
       expect(chef_run).to create_template("/etc/mongod.conf")
     end
 
-  #  it 'should create a symlink of mongod.service in /lib/systemd/system/mongod.service' do
-  #    expect(chef_run).to create_template("/lib/systemd/system/mongod.service")
-  #  end
+    it 'should create a symlink of mongod.service in /lib/systemd/system/mongod.service' do
+      expect(chef_run).to create_template("/lib/systemd/system/mongod.service")
+    end
 
     it 'should enable the mongod service' do
       expect(chef_run).to enable_service 'mongod'
@@ -46,6 +46,6 @@ describe 'mongodb::default' do
     it 'should start the mongod service' do
       expect(chef_run).to start_service 'mongod'
     end
-    
+
   end
 end
