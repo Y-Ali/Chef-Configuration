@@ -11,4 +11,5 @@ end
 
 describe port(27017) do
 it { should be_listening }
+its('addresses') { should include '0.0.0.0'}
 end

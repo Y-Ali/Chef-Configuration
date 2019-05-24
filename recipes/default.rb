@@ -13,28 +13,29 @@ apt_repository 'mongodb-org' do
     components ["multiverse"]
     keyserver "hkp://keyserver.ubuntu.com:80"
     key "EA312927"
-
 end
 
 package 'mongodb-org' do
   action :upgrade
 end
 
+service 'mongod' do
+  supports status: true, restart: true, reload: true
+  action [:enable, :start]
+end
+
 template '/etc/mongod.conf' do # location
   source 'mongod.conf.erb'  # mongo.conf.erb source
+  mode '0755'
   owner 'root'
   group 'root'
-  mode '0755'
   notifies :restart, 'service[mongod]'
-
 end
 
 template '/lib/systemd/system/mongod.service' do
   source 'mongod.service.erb'
+  mode '0600'
+  owner 'root'
+  group 'root'
   notifies :restart, 'service[mongod]'
-end
-
-service 'mongod' do
-  supports status: true, restart: true, reload: true
-  action [:enable, :start]
 end
